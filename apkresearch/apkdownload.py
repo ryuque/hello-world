@@ -41,7 +41,7 @@ def extract_apis_and_permissions(apk_path):
 
 def is_download_finished(download_folder):
     for filename in os.listdir(download_folder):
-        if filename.endswith('.crdownload'):  # Chrome‚Íƒ_ƒEƒ“ƒ[ƒh’†‚Ìƒtƒ@ƒCƒ‹‚É‚±‚ÌŠg’£q‚ğ•t‚¯‚Ü‚·
+        if filename.endswith('.crdownload'):  # Chromeã¯ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ä¸­ã®ãƒ•ã‚¡ã‚¤ãƒ«ã«ã“ã®æ‹¡å¼µå­ã‚’ä»˜ã‘ã¾ã™
             return False
 
     return True
@@ -49,21 +49,21 @@ def is_download_finished(download_folder):
 def download_apk(keyword):
     try:
     
-        # Chrome‚ÌWebDriverƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚Ü‚·
+        # Chromeã®WebDriverã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ã¾ã™
         driver = webdriver.Chrome('/mnt/c/chromedriver_win32/chromedriver.exe')
 
-        # APKPure‚ÌƒEƒFƒuƒTƒCƒg‚ğŠJ‚«‚Ü‚·
+        # APKPureã®ã‚¦ã‚§ãƒ–ã‚µã‚¤ãƒˆã‚’é–‹ãã¾ã™
         driver.get('https://m.apkpure.com/jp/search?q='+keyword)
 
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'first-info')))
-        # ƒ_ƒEƒ“ƒ[ƒhƒŠƒ“ƒN‚ğƒNƒŠƒbƒN‚µ‚Ü‚·
+        # ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒªãƒ³ã‚¯ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¾ã™
         element = driver.find_element(By.CLASS_NAME, "first-info")
         link = element.get_attribute('href')
 
         driver.get(link+'/download')
     
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'download-start-btn')))
-        # ƒ_ƒEƒ“ƒ[ƒhƒŠƒ“ƒN‚ğƒNƒŠƒbƒN‚µ‚Ü‚·
+        # ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒªãƒ³ã‚¯ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¾ã™
         element = driver.find_element(By.CLASS_NAME, "download-start-btn")
 
         link = element.get_attribute('href')
@@ -72,10 +72,10 @@ def download_apk(keyword):
         time.sleep(10)
     
         #driver.find_element(By.CLASS_NAME, "download-start-btn").click()
-        # ƒ_ƒEƒ“ƒ[ƒhƒtƒHƒ‹ƒ_‚ğw’è‚µ‚Ü‚·
-        download_folder = '/mnt/c/users/ryutaro/downloads'
+        # ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒ•ã‚©ãƒ«ãƒ€ã‚’æŒ‡å®šã—ã¾ã™
+        download_folder = '/mnt/c/users/users_name/downloads'
 
-        # ƒ_ƒEƒ“ƒ[ƒh‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚¿‚Ü‚·
+        # ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãŒå®Œäº†ã™ã‚‹ã¾ã§å¾…ã¡ã¾ã™
         while not is_download_finished(download_folder):
             time.sleep(1)
 
@@ -86,7 +86,7 @@ def download_apk(keyword):
         print("An error occurred: ", e)
 
     finally:
-        # ƒuƒ‰ƒEƒU‚ğ•Â‚¶‚Ü‚·
+        # ãƒ–ãƒ©ã‚¦ã‚¶ã‚’é–‰ã˜ã¾ã™
     
         print("Compleat download")
 
@@ -95,15 +95,15 @@ def research(keyword):
     print(f"Searching for APP: {keyword}")
     download_apk(keyword)
 
-    directory = "/mnt/c/users/ryutaro/downloads"  # ‚±‚±‚É’Tõ‚·‚éƒfƒBƒŒƒNƒgƒŠ‚ÌƒpƒX‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢
+    directory = "/mnt/c/users/users_name/downloads"  # ã“ã“ã«æ¢ç´¢ã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ãƒ‘ã‚¹ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„
     file_name = find_apk_files(directory)
 
     if file_name is None:
         print(f"No APK file found for: {keyword}")
-        return  0,0,0           # APKƒtƒ@ƒCƒ‹‚ªŒ©‚Â‚©‚ç‚È‚¢ê‡AŸ‚ÌƒL[ƒ[ƒh‚Éi‚İ‚Ü‚·
+        return  0,0,0           # APKãƒ•ã‚¡ã‚¤ãƒ«ãŒè¦‹ã¤ã‹ã‚‰ãªã„å ´åˆã€æ¬¡ã®ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã«é€²ã¿ã¾ã™
 
     print(f"Extracting permissions for: {file_name}")
-    file_path = os.path.join("/mnt/c/users/ryutaro/downloads", file_name)
+    file_path = os.path.join("/mnt/c/users/users_name/downloads", file_name)
     permissions = extract_apis_and_permissions(file_path)
             
     delete_file(file_path)
@@ -117,11 +117,11 @@ if __name__ == "__main__":
         writer.writeheader()
 
     try:
-        # CSVƒtƒ@ƒCƒ‹‚©‚çƒL[ƒ[ƒh‚ğæ“¾
+        # CSVãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–å¾—
         with open('output.csv', 'r', encoding='utf-8_sig') as f:
             reader = csv.reader(f)
-            next(reader)  # ƒwƒbƒ_[s‚ğƒXƒLƒbƒv
-            for row in reader:  # 2s–ÚˆÈ~‚ğ“Ç‚İæ‚è‚Ü‚·
+            next(reader)  # ãƒ˜ãƒƒãƒ€ãƒ¼è¡Œã‚’ã‚¹ã‚­ãƒƒãƒ—
+            for row in reader:  # 2è¡Œç›®ä»¥é™ã‚’èª­ã¿å–ã‚Šã¾ã™
 
                 suc, permissions, file_name = research(row[0])
 
@@ -136,7 +136,7 @@ if __name__ == "__main__":
                         else:
                             writer.writerow(row+[file_name]+permissions)
 
-                # ‚±‚±‚Ås‚²‚Æ‚Ìˆ—‚ğs‚¢‚Ü‚·
+                # ã“ã“ã§è¡Œã”ã¨ã®å‡¦ç†ã‚’è¡Œã„ã¾ã™
 
     except FileNotFoundError:
         print("CSV file not found.")
